@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">C196</string>
+    <string name="cancel">Cancel</string>
+    <string name="mm_dd_yyyy">MM/DD/YYYY</string>
+    <string name="term_end">Term End</string>
+    <string name="courses">Courses</string>
+    <string name="english">English</string>
+    <string name="term_start">Term Start</string>
+    <string name="term_name">Term Name</string>
+    <string name="term_id">Term ID</string>
+    <string name="save">Save</string>
 </resources>

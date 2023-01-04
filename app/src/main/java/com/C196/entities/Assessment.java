@@ -1,27 +1,35 @@
 package com.C196.entities;
 
+import android.app.Application;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.C196.R;
+import com.C196.database.Repository;
+
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity(tableName = "assessments")
 public class Assessment {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private Instant endDate;
+    private LocalDate endDate;
     private AssessmentType type;
     private boolean completed;
     private boolean passed;
     private int courseID;
 
-    public Assessment(String title, Instant endDate, AssessmentType type, boolean completed, boolean passed) {
+    public Assessment(String title, LocalDate endDate, AssessmentType type, boolean completed, boolean passed, int courseID) {
+
         this.title = title;
         this.endDate = endDate;
         this.type = type;
         this.completed = completed;
         this.passed = passed;
+        this.courseID = courseID;
     }
 
     public Assessment(){}
@@ -34,11 +42,11 @@ public class Assessment {
         this.title = title;
     }
 
-    public Instant getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Instant endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -65,4 +73,6 @@ public class Assessment {
     public void setPassed(boolean passed) {
         this.passed = passed;
     }
+
+
 }

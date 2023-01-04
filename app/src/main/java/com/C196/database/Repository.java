@@ -38,7 +38,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
         return mAllTerms;
@@ -49,7 +49,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -59,7 +59,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -69,7 +69,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -82,7 +82,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
 
@@ -94,9 +94,9 @@ public class Repository {
     public ArrayList<Course> getAllCourses() {
         databaseExecutor.execute(() -> mAllCourses = mCourseDAO.getAllCourses());
         try{
-            Thread.sleep(500);
+            Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
 
@@ -108,7 +108,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -118,7 +118,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -128,7 +128,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -140,7 +140,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
 
@@ -154,7 +154,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
 
@@ -166,7 +166,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -176,7 +176,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }
@@ -186,7 +186,7 @@ public class Repository {
         try{
             Thread.sleep(1000);
         }
-        catch (Exception e){
+        catch (InterruptedException e){
             e.printStackTrace();
         }
     }

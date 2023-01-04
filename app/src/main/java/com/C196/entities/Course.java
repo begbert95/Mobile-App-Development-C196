@@ -3,7 +3,7 @@ package com.C196.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Entity(tableName = "courses")
@@ -11,20 +11,21 @@ public class Course {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private Instant start;
-    private Instant end;
+    private LocalDate start;
+    private LocalDate end;
     private Status status;
     private String instructorName;
     private String instructorPhone;
     private String instructorEmail;
+    private int termID;
     private ArrayList<String> notes;
-    private ArrayList<String> alers;
+    private ArrayList<String> alerts;
     private ArrayList<Assessment> assessments;
 
     public Course(
             String title,
-            Instant start,
-            Instant end,
+            LocalDate start,
+            LocalDate end,
             Status status,
             String instructorName,
             String instructorPhone,
@@ -41,6 +42,14 @@ public class Course {
 
     public Course(){}
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -49,19 +58,19 @@ public class Course {
         this.title = title;
     }
 
-    public Instant getStart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setStart(Instant start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public Instant getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setEnd(Instant end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
@@ -96,4 +105,14 @@ public class Course {
     public void setInstructorEmail(String instructorEmail) {
         this.instructorEmail = instructorEmail;
     }
+
+    public int getTermID() {
+        return termID;
+    }
+
+    public void setTermID(int termID) {
+        this.termID = termID;
+    }
+
+    //TODO list controls
 }

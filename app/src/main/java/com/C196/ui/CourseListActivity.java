@@ -15,6 +15,6 @@ public class CourseListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_list);
 
         FloatingActionButton newCourseButton = findViewById(R.id.newCourseButton);
-        newCourseButton.setOnClickListener(view -> startActivity(new Intent(CourseListActivity.this, CourseActivity.class)));
+        newCourseButton.setOnClickListener(view -> startActivity(new Intent(CourseListActivity.this, CourseDetails.class)));
     }
 }
