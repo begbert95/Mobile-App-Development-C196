@@ -6,6 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.C196.dao.AlertDAO;
 import com.C196.dao.AssessmentDAO;
 import com.C196.dao.CourseDAO;
 import com.C196.dao.TermDAO;
@@ -18,6 +19,7 @@ public abstract class DatabaseBuilder extends RoomDatabase {
     public abstract TermDAO termDAO();
     public abstract CourseDAO courseDAO();
     public abstract AssessmentDAO assessmentDAO();
+    public abstract AlertDAO alertDAO();
 
     private static volatile DatabaseBuilder INSTANCE;
 

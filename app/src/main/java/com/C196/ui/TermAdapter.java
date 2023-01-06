@@ -31,8 +31,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                 Intent intent = new Intent(context, TermDetails.class);
                 intent.putExtra("id", current.getId());
                 intent.putExtra("title", current.getTitle());
-                intent.putExtra("start", current.getStart().toString());
-                intent.putExtra("end", current.getEnd().toString());
+                intent.putExtra("start", current.getStart());
+                intent.putExtra("end", current.getEnd());
                 context.startActivity(intent);
             });
         }
@@ -60,7 +60,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     public void onBindViewHolder(@NonNull TermAdapter.TermViewHolder holder, int position) {
 
         if(mTerms == null){
-            holder.termItemView.setText("<No term name>");
+            holder.termItemView.setText("<No terms created>");
             return;
         }
 

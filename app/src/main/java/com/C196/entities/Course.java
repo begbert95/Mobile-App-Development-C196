@@ -3,29 +3,24 @@ package com.C196.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 @Entity(tableName = "courses")
 public class Course {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private LocalDate start;
-    private LocalDate end;
+    private String start;
+    private String end;
     private Status status;
     private String instructorName;
     private String instructorPhone;
     private String instructorEmail;
     private int termID;
-    private ArrayList<String> notes;
-    private ArrayList<String> alerts;
-    private ArrayList<Assessment> assessments;
+    private String note;
 
     public Course(
             String title,
-            LocalDate start,
-            LocalDate end,
+            String start,
+            String end,
             Status status,
             String instructorName,
             String instructorPhone,
@@ -58,19 +53,19 @@ public class Course {
         this.title = title;
     }
 
-    public LocalDate getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
@@ -112,6 +107,14 @@ public class Course {
 
     public void setTermID(int termID) {
         this.termID = termID;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     //TODO list controls

@@ -3,8 +3,8 @@ package com.C196.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.time.Instant;
-import java.time.LocalDate;
+import com.C196.database.Repository;
+
 import java.util.ArrayList;
 
 @Entity (tableName = "terms")
@@ -12,25 +12,19 @@ public class Term {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private LocalDate start;
-    private LocalDate end;
+    private String start;
+    private String end;
     private ArrayList<Course> courses;
 
 
-    public Term(int id, String title, LocalDate start, LocalDate end){
+    public Term(int id, String title, String start, String end){
         this.id = id;
         this.title = title;
         this.start = start;
         this.end = end;
     }
 
-    public Term(String title, LocalDate start, LocalDate end, ArrayList<Course> courses) {
-        this.title = title;
-        this.start = start;
-        this.end = end;
-        this.courses = courses;
-    }
-    public Term(String title, LocalDate start, LocalDate end) {
+    public Term(String title, String start, String end) {
         this.title = title;
         this.start = start;
         this.end = end;
@@ -42,7 +36,7 @@ public class Term {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -54,19 +48,19 @@ public class Term {
         this.title = title;
     }
 
-    public LocalDate getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
@@ -74,16 +68,10 @@ public class Term {
         return courses;
     }
 
-    public void setCourses(ArrayList<Course> courses) {
-        this.courses = courses;
-    }
-
-    public void addCourse(Course course){
-        courses.add(course);
-    }
-
-    public boolean removeCourse(Course c){
-        return courses.remove(c);
+    public void setCourses(Repository r) {
+        for(Course c : r.getAllCourses())
+            if(c.getTermID() == id)
+                courses.add(c);
     }
 
     public boolean isSafeToDelete(){

@@ -2,9 +2,11 @@ package com.C196.database;
 
 import android.app.Application;
 
+import com.C196.dao.AlertDAO;
 import com.C196.dao.AssessmentDAO;
 import com.C196.dao.CourseDAO;
 import com.C196.dao.TermDAO;
+import com.C196.entities.Alert;
 import com.C196.entities.Assessment;
 import com.C196.entities.Course;
 import com.C196.entities.Term;
@@ -17,9 +19,11 @@ public class Repository {
     private final CourseDAO mCourseDAO;
     private final TermDAO mTermDAO;
     private final AssessmentDAO mAssessmentDAO;
+    private final AlertDAO mAlertDAO;
     private ArrayList<Term> mAllTerms;
     private ArrayList<Course> mAllCourses;
     private ArrayList<Assessment> mAllAssessments;
+    private ArrayList<Alert> mAllAlerts;
 
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -29,6 +33,7 @@ public class Repository {
         mCourseDAO = db.courseDAO();
         mTermDAO = db.termDAO();
         mAssessmentDAO = db.assessmentDAO();
+        mAlertDAO = db.alertDAO();
     }
 
 
@@ -73,21 +78,6 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    /*
-    public Course lookupTerm(int id){
-        Term t = new Term();
-
-        databaseExecutor.execute(()-> t = mCourseDAO.lookupCourse(id));
-
-        try{
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        return t;
-    }*/
     //endregion ****************** Terms ******************
 
     //region ****************** Courses ******************
@@ -132,20 +122,6 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    /* public Course lookupCourse(int id){
-        final Course c = new Course();
-
-        databaseExecutor.execute(()-> c = mCourseDAO.lookupCourse(id));
-
-        try{
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        return c;
-    }*/
     //endregion ****************** Courses ******************
 
     //region ****************** Assessments ******************
@@ -182,6 +158,50 @@ public class Repository {
     }
     public void delete(Assessment assessment){
         databaseExecutor.execute(() -> mAssessmentDAO.delete(assessment));
+
+        try{
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+    //endregion ****************** Assessments ******************
+    //region ****************** Alerts ******************
+
+    public ArrayList<Alert> getAllAlerts() {
+        databaseExecutor.execute(() -> mAllAlerts = mAlertDAO.getAllAlerts());
+        try{
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
+        return mAllAlerts;
+    }
+    public void insert(Alert alert){
+        databaseExecutor.execute(() -> mAlertDAO.insert(alert));
+
+        try{
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+    public void update(Alert alert){
+        databaseExecutor.execute(() -> mAlertDAO.update(alert));
+
+        try{
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+    public void delete(Alert alert){
+        databaseExecutor.execute(() -> mAlertDAO.delete(alert));
 
         try{
             Thread.sleep(1000);

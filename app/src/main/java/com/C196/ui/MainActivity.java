@@ -37,16 +37,16 @@ public class MainActivity extends AppCompatActivity {
 
         Repository repository = new Repository(getApplication());
 
-        repository.insert(new Assessment("Assessment for Course 1", LocalDate.parse("2022-04-13 8:00"), AssessmentType.OBJECTIVE, true, false, 1));
-        repository.insert(new Assessment("Assessment for Course 2", LocalDate.parse("2022-04-13 8:00"), AssessmentType.PERFORMANCE, true, false, 2));
-        repository.insert(new Assessment("Assessment for Course 3", LocalDate.parse("2022-04-13 8:00"), AssessmentType.OBJECTIVE, true, false, 3));
+        repository.insert(new Assessment("Assessment for Course 1", "2022-04-13 8:00", AssessmentType.OBJECTIVE, true, false, 1));
+        repository.insert(new Assessment("Assessment for Course 2", "2022-04-13 8:00", AssessmentType.PERFORMANCE, true, false, 2));
+        repository.insert(new Assessment("Assessment for Course 3", "2022-04-13 8:00", AssessmentType.OBJECTIVE, true, false, 3));
 
-        repository.insert(new Term("Term 1", LocalDate.parse("2022-01-13 8:00"), LocalDate.parse("2022-04-13 8:00")));
-        repository.insert(new Term("Term 2", LocalDate.parse("2022-01-13 8:00"), LocalDate.parse("2022-04-13 8:00")));
-        repository.insert(new Term("Term 3", LocalDate.parse("2022-01-13 8:00"), LocalDate.parse("2022-04-13 8:00")));
+        repository.insert(new Term("Term 1", "2022-01-13 8:00", "2022-04-13 8:00"));
+        repository.insert(new Term("Term 2", "2022-01-13 8:00", "2022-04-13 8:00"));
+        repository.insert(new Term("Term 3", "2022-01-13 8:00", "2022-04-13 8:00"));
 
-        repository.insert(new Course("Course 1", LocalDate.parse("2022-01-13 8:00"), LocalDate.parse("2022-04-13 8:00"), Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov"));
-        repository.insert(new Course("Course 2", LocalDate.parse("2022-01-13 8:00"), LocalDate.parse("2022-04-13 8:00"), Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov"));
-        repository.insert(new Course("Course 3", LocalDate.parse("2022-01-13 8:00"), LocalDate.parse("2022-04-13 8:00"), Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov"));
+        repository.insert(new Course("Course 1", "2022-01-13 8:00", "2022-04-13 8:00", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov"));
+        repository.insert(new Course("Course 2", "2022-01-13 8:00", "2022-04-13 8:00", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov"));
+        repository.insert(new Course("Course 3", "2022-01-13 8:00", "2022-04-13 8:00", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov"));
     }
 }
