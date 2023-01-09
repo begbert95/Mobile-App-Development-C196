@@ -9,7 +9,7 @@ import androidx.room.Update;
 
 import com.C196.entities.Term;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface TermDAO {
@@ -23,5 +23,5 @@ public interface TermDAO {
     void delete(Term term);
 
     @Query("SELECT * FROM TERMS ORDER BY ID")
-    ArrayList<Term> getAllTerms();
+    List<Term> getAllTerms();
 }

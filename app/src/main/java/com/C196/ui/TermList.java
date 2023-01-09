@@ -18,7 +18,7 @@ public class TermList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_list);
+        setContentView(R.layout.term_list);
 
         RecyclerView termListRecycler = findViewById(R.id.termListCourseRecycler);
         final TermAdapter termAdapter = new TermAdapter(this);

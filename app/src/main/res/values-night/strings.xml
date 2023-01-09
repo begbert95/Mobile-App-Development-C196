@@ -1,12 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">C196</string>
+    <string name="cancel">Cancel</string>
+    <string name="mm_dd_yyyy">MM/DD/YYYY</string>
     <string name="term_end">Term End</string>
     <string name="courses">Courses</string>
+    <string name="english">English</string>
+    <string name="term_start">Term Start</string>
+    <string name="term_name">Term Name</string>
+    <string name="term_id">Term ID</string>
+    <string name="save">Save</string>
     <string name="menu">Menu</string>
     <string name="notify_start">Notify Start</string>
     <string name="notify_end">Notify End</string>
-    <string name="delete_term">Delete Term</string>
-    <string name="delete_product">Delete Product</string>
+    <string name="delete_term">Delete term</string>
+    <string name="delete_course">Delete course</string>
     <string name="course_id">Course ID</string>
     <string name="course_title">Course Title</string>
     <string name="term_x">Term X</string>
@@ -21,4 +28,7 @@
     <string name="instructor_email">Instructor Email</string>
     <string name="notes">Notes:</string>
     <string name="this_course_is_hard">This course is hard</string>
+    <string name="channel_name">C196</string>
+    <string name="channel_description">Scheduling App Channel</string>
+    <string name="plus_sign">plus sign</string>
 </resources>

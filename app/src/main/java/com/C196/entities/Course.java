@@ -18,14 +18,18 @@ public class Course {
     private String note;
 
     public Course(
+            int id,
             String title,
             String start,
             String end,
             Status status,
             String instructorName,
             String instructorPhone,
-            String instructorEmail
-    ) {
+            String instructorEmail,
+            int termID,
+            String note)
+    {
+        this.id = id;
         this.title = title;
         this.start = start;
         this.end = end;
@@ -33,6 +37,8 @@ public class Course {
         this.instructorName = instructorName;
         this.instructorPhone = instructorPhone;
         this.instructorEmail = instructorEmail;
+        this.termID = termID;
+        this.note = note;
     }
 
     public Course(){}

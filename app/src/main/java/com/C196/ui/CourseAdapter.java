@@ -29,14 +29,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 final Course current = mCourses.get(position);
                 Intent intent = new Intent(context, CourseDetails.class);
                 //TODO figure out list properties
-                intent.putExtra("id", current.getId());
                 intent.putExtra("title", current.getTitle());
-                intent.putExtra("start", current.getStart().toString());
-                intent.putExtra("end", current.getEnd().toString());
+                intent.putExtra("start", current.getStart());
+                intent.putExtra("end", current.getEnd());
                 intent.putExtra("status", current.getStatus());
                 intent.putExtra("instructorName", current.getInstructorName());
                 intent.putExtra("instructorPhone", current.getInstructorPhone());
                 intent.putExtra("instructorEmail", current.getInstructorEmail());
+                intent.putExtra("termID", current.getTermID());
+                intent.putExtra("note", current.getNote());
                 context.startActivity(intent);
             });
         }

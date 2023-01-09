@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.C196.entities.Assessment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface AssessmentDAO {
@@ -23,7 +24,7 @@ public interface AssessmentDAO {
     void delete(Assessment assessment);
 
     @Query("SELECT * FROM Assessments ORDER BY ID")
-    ArrayList<Assessment> getAllAssessments();
+    List<Assessment> getAllAssessments();
 
     @Query("SELECT * FROM Assessments WHERE ID = :id")
     Assessment lookupAssessment(int id);

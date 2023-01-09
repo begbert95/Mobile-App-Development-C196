@@ -6,10 +6,6 @@
         android:id="@+id/termDelete"
         android:title="@string/delete_term" />
     <item
-        android:id="@+id/termShareMenu"
-        android:title="@string/menu"
-        />
-    <item
         android:id="@+id/termNotifyStart"
         android:title="@string/notify_start"
         />

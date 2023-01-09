@@ -1,9 +1,5 @@
 package com.C196.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
@@ -13,21 +9,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.C196.R;
 import com.C196.database.Repository;
-import com.C196.entities.Alert;
 import com.C196.entities.Course;
 import com.C196.entities.Term;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -35,10 +33,15 @@ public class TermDetails extends AppCompatActivity {
 
     EditText termIDEdit;
     EditText termTitleEdit;
+    EditText termStartEdit;
+    EditText termEndEdit;
     DatePickerDialog.OnDateSetListener termStartDate;
     DatePickerDialog.OnDateSetListener termEndDate;
     Button termSaveButton;
     Button termCancelButton;
+
+    final Calendar calendarStart = Calendar.getInstance();
+    final Calendar calendarEnd = Calendar.getInstance();
 
     int id;
     String title, start, end;
@@ -53,10 +56,9 @@ public class TermDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.term_details);
 
-        termIDEdit = findViewById(R.id.termIdEdit);
         termTitleEdit = findViewById(R.id.termTitleEdit);
-        termStartDate = findViewById(R.id.termStartDate);
-        termEndDate = findViewById(R.id.termEndDate);
+        termStartEdit = findViewById(R.id.termStartEdit);
+        termEndEdit = findViewById(R.id.termEndEdit);
         termSaveButton = findViewById(R.id.termSaveButton);
         termCancelButton = findViewById(R.id.termCancelButton);
 
@@ -86,44 +88,79 @@ public class TermDetails extends AppCompatActivity {
 
         termIDEdit.setText(id);
         termTitleEdit.setText(title);
-        termStartDate.setText(start);
-        termEndDate.setText(end);
+        termStartEdit.setText(start);
+        termEndEdit.setText(end);
 
-        termSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(id == -1){
-                    term = new Term(
-                            0,
-                            termTitleEdit.getText().toString(),
-                            termStartDate.toString(),
-                            termEndDate.toString()
-                    );
-                    repository.insert(term);
-                    //Toast.makeText(this, "Term created", Toast.LENGTH_LONG).show();
+        termStartEdit.setOnClickListener(view -> {
+            String info = termStartEdit.getText().toString();
+
+            if(!info.equals("")){
+                try{
+                    calendarStart.setTime(sdf.parse(info));
                 }
-                else {
-                    term = new Term(
-                            Integer.parseInt(termIDEdit.getText().toString()),
-                            termTitleEdit.getText().toString(),
-                            termStartDate.toString(),
-                            termEndDate.toString()
-                    );
-                    repository.update(term);
-                    //Toast.makeText(this, "Term updated", Toast.LENGTH_LONG).show();
-                }
-                try {
-                    this.finalize();
-                } catch (Throwable e) {
+                catch (ParseException e){
                     e.printStackTrace();
                 }
             }
+            new DatePickerDialog(TermDetails.this, termStartDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH),
+                    calendarStart.get(Calendar.DAY_OF_MONTH)).show();
+        });
+        termStartDate = (datePicker, i, i1, i2) -> {
+            calendarStart.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+            termStartEdit.setText(sdf.format(calendarStart.getTime()));
+        };
+
+        termEndEdit.setOnClickListener(view -> {
+            String info = termEndEdit.getText().toString();
+
+            if(!info.equals("")){
+                try{
+                    calendarEnd.setTime(sdf.parse(info));
+                }
+                catch (ParseException e){
+                    e.printStackTrace();
+                }
+            }
+            new DatePickerDialog(TermDetails.this, termEndDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH),
+                    calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+        });
+        termEndDate = (datePicker, i, i1, i2) -> {
+            calendarEnd.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+            termEndEdit.setText(sdf.format(calendarStart.getTime()));
+        };
+
+        termSaveButton.setOnClickListener(view -> {
+            if(id == -1){
+                term = new Term(
+                        termTitleEdit.getText().toString(),
+                        termStartDate.toString(),
+                        termEndDate.toString()
+                );
+                repository.insert(term);
+                Toast.makeText(getParent(), "Term created", Toast.LENGTH_LONG).show();
+            }
+            else {
+                term = new Term(
+                        termTitleEdit.getText().toString(),
+                        termStartDate.toString(),
+                        termEndDate.toString()
+                );
+                repository.update(term);
+                Toast.makeText(getParent(), "Term updated", Toast.LENGTH_LONG).show();
+            }
+            try {
+                finish();
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         });
 
+        termCancelButton = findViewById(R.id.termCancelButton);
+        termCancelButton.setOnClickListener(view -> finish());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_term_delete, menu);
+        getMenuInflater().inflate(R.menu.menu_term_details, menu);
         return true;
     }
     @SuppressLint("NonConstantResourceId")
@@ -138,28 +175,27 @@ public class TermDetails extends AppCompatActivity {
 
             case R.id.termDelete:
                 for (Term t : repository.getAllTerms()) {
-                    if (t.getId() == id) term = t;
+                    if (t.getId() == id)
+                        term = t; break;
                 }
-                if (term.isSafeToDelete()) {
+
+                int courseCount = 0;
+
+                for(Course c : repository.getAllCourses())
+                    if (c.getTermID() == id)
+                        courseCount++;
+
+
+
+                if(courseCount > 0)
+                    Toast.makeText(TermDetails.this, "Unable to delete a term with courses assigned!", Toast.LENGTH_LONG).show();
+                else {
                     repository.delete(term);
                     Toast.makeText(TermDetails.this, term.getTitle() + " was deleted", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(TermDetails.this, "Unable to delete a term with courses assigned!", Toast.LENGTH_LONG).show();
                 }
                 return true;
-            /*case R.id.termShareMenu:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, editNote.getText().toString());
-                sendIntent.putExtra(Intent.EXTRA_TITLE, "Message Title");
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-                return true;*/
-            case R.id.termNotifyStart:
-                Alert alert = new Alert("Term " + termIDEdit.getText().toString() + ": " + termTitleEdit.getText() + " starts today!", termStartDate.toString());
-                repository.insert(alert);
 
+            case R.id.termNotifyStart:
 
                 String startDateFromScreen = termStartDate.toString();
 
@@ -171,7 +207,8 @@ public class TermDetails extends AppCompatActivity {
 
                 intent = new Intent(TermDetails.this, Receiver.class);
                 intent.putExtra("key", startDateFromScreen + " should trigger");
-                sender = PendingIntent.getBroadcast(TermDetails.this, repository.getAllAlerts().size(), intent, PendingIntent.FLAG_IMMUTABLE);
+                //TODO Fix request code
+                sender = PendingIntent.getBroadcast(TermDetails.this, 15, intent, PendingIntent.FLAG_IMMUTABLE);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
                 return true;
             case R.id.termNotifyEnd:
@@ -184,7 +221,8 @@ public class TermDetails extends AppCompatActivity {
                 }
                 intent = new Intent(TermDetails.this, Receiver.class);
                 intent.putExtra("key", endDateFromScreen + " should trigger");
-                sender = PendingIntent.getBroadcast(TermDetails.this, repository.getAllAlerts().size(), intent, PendingIntent.FLAG_IMMUTABLE);
+                //TODO fix request code
+                sender = PendingIntent.getBroadcast(TermDetails.this, 15, intent, PendingIntent.FLAG_IMMUTABLE);
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
                 return true;

@@ -10,6 +10,7 @@ import androidx.room.Update;
 import com.C196.entities.Course;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface CourseDAO {
@@ -23,7 +24,7 @@ public interface CourseDAO {
     void delete(Course course);
 
     @Query("SELECT * FROM courses ORDER BY ID")
-    ArrayList<Course> getAllCourses();
+    List<Course> getAllCourses();
 
     @Query("SELECT * FROM COURSES WHERE ID = :id")
     Course lookupCourse(int id);

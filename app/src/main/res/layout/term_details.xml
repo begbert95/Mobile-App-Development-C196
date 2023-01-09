@@ -25,26 +25,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/term_id" />
-
-                    <EditText
-                        android:id="@+id/termIdEdit"
-                        android:layout_width="70dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="15dp"
-                        android:autofillHints="id"
-                        android:inputType="number" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,12 +35,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="50dp"
                         android:text="@string/term_name" />
+
+                    <Space
+                        android:layout_width="75pt"
+                        android:layout_height="match_parent" />
 
                     <EditText
                         android:id="@+id/termTitleEdit"
-                        android:layout_width="100dp"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_weight="1"
                         android:autofillHints="title"
                         android:hint="@string/term_x"
                         android:inputType="text" />
@@ -73,15 +60,21 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
-                        android:layout_gravity="clip_vertical"
-                        android:text="@string/term_start"
-                        android:textAlignment="inherit" />
+                        android:text="@string/term_start" />
 
-                    <DatePicker
-                        android:id="@+id/termStartDate"
-                        android:layout_width="100dp"
+                    <Space
+                        android:layout_width="75pt"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+
+                        android:id="@+id/termStartEdit"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
-                        />
+                        android:layout_weight="1"
+                        android:autofillHints="start date"
+                        android:hint="@string/mm_dd_yyyy"
+                        android:inputType="date" />
 
                 </LinearLayout>
 
@@ -93,14 +86,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/term_end"
-                        android:textAlignment="center" />
+                        android:text="@string/term_end"/>
 
-                    <DatePicker
-                        android:id="@+id/termEndDate"
-                        android:layout_width="wrap_content"
+                    <Space
+                        android:layout_width="75pt"
+                        android:layout_height="match_parent" />
+
+                    <EditText
+                        android:id="@+id/termEndEdit"
+                        android:layout_width="0dp"
                         android:layout_height="50dp"
-                        />
+                        android:layout_weight="1"
+                        android:autofillHints="end date"
+                        android:hint="@string/mm_dd_yyyy"
+                        android:inputType="date" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -111,6 +110,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="25dp"
                         android:text="@string/courses" />
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/termDetailCourseRecycler"
@@ -118,30 +118,36 @@
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/termSaveButton"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/save" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/termCancelButton"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cancel" />
+
+                </LinearLayout>
             </LinearLayout>
 
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/termSaveButton"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/save" />
-
-                <Button
-                    android:id="@+id/termCancelButton"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cancel" />
-
-            </LinearLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.C196.R;
 
-public class AssessmentActivity extends AppCompatActivity {
+public class AssessmentDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
