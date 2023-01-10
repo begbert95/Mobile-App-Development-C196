@@ -14,7 +14,8 @@ public class Assessment {
     private boolean passed;
     private int courseID;
 
-    public Assessment(String title, String endDate, AssessmentType type, boolean completed, boolean passed, int courseID) {
+    public Assessment(int id, String title, String endDate, AssessmentType type, boolean completed, boolean passed, int courseID) {
+        this.id = id;
         this.title = title;
         this.endDate = endDate;
         this.type = type;

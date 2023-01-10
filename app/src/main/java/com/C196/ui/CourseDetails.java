@@ -51,9 +51,10 @@ public class CourseDetails extends AppCompatActivity {
     Button courseSaveButton;
     Button courseCancelButton;
 
+
     Course course;
 
-    Repository repository;
+    Repository repository = new Repository(getApplication());
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
 
@@ -61,17 +62,10 @@ public class CourseDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_detail);
+        setContentView(R.layout.course_detail);
 
-        courseTitleEdit = findViewById(R.id.courseTitleEdit);
-        courseNotesEdit = findViewById(R.id.courseNotesEdit);
-        courseStartEdit = findViewById(R.id.courseStartEdit);
-        courseEndEdit = findViewById(R.id.courseEndEdit);
-        courseInstructorNameEdit = findViewById(R.id.courseInstructorNameEdit);
-        courseInstructorPhoneEdit = findViewById(R.id.courseInstructorPhoneEdit);
-        courseInstructorEmailEdit = findViewById(R.id.courseInstructorEmailEdit);
-        statusSpinner = findViewById(R.id.courseStatusDropdown);
-        termSpinner = findViewById(R.id.courseTermDropdown);
+        setupViews();
+
 
         try{
             course = new Course(
@@ -137,12 +131,29 @@ public class CourseDetails extends AppCompatActivity {
         });
         */
 
-
-        repository = new Repository(getApplication());
-
+        setupListeners();
 
 
+        courseStartDate = (view, year, monthOfYear, dayOfMonth) -> {
 
+            calendarStart.set(Calendar.YEAR, year);
+            calendarStart.set(Calendar.MONTH, monthOfYear);
+            calendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            courseStartEdit.setText(sdf.format(calendarStart.getTime()));
+        };
+
+        courseEndDate = (view, year, monthOfYear, dayOfMonth) -> {
+
+            calendarEnd.set(Calendar.YEAR, year);
+            calendarEnd.set(Calendar.MONTH, monthOfYear);
+            calendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            courseEndEdit.setText(sdf.format(calendarEnd.getTime()));
+        };
+    }
+
+    private void setupListeners(){
         courseStartEdit.setOnClickListener(view -> {
             String info = courseStartEdit.getText().toString();
             if(!info.equals("")){
@@ -153,15 +164,13 @@ public class CourseDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+            else
+                calendarStart.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+
+
             new DatePickerDialog(CourseDetails.this, courseStartDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH),
                     calendarStart.get(Calendar.DAY_OF_MONTH)).show();
         });
-        courseStartDate = (datePicker, i, i1, i2) -> {
-            calendarStart.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
-            courseStartEdit.setText(sdf.format(calendarStart.getTime()));
-        };
-
-
         courseEndEdit.setOnClickListener(view -> {
             String info = courseEndEdit.getText().toString();
 
@@ -173,16 +182,14 @@ public class CourseDetails extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+            else
+                calendarEnd.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+
+
             new DatePickerDialog(CourseDetails.this, courseEndDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH),
                     calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
         });
-        courseEndDate = (datePicker, i, i1, i2) -> {
-            calendarEnd.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
-            courseEndEdit.setText(sdf.format(calendarStart.getTime()));
-        };
 
-
-        courseSaveButton = findViewById(R.id.courseSaveButton);
         courseSaveButton.setOnClickListener(view -> {
             course.setTitle(courseTitleEdit.getText().toString());
             course.setStart(courseStartEdit.getText().toString());
@@ -211,11 +218,23 @@ public class CourseDetails extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-
-
-        courseCancelButton = findViewById(R.id.courseCancelButton);
         courseCancelButton.setOnClickListener(view -> finish());
     }
+    private void setupViews(){
+        courseTitleEdit = findViewById(R.id.courseTitleEdit);
+        courseNotesEdit = findViewById(R.id.courseNotesEdit);
+        courseStartEdit = findViewById(R.id.courseStartEdit);
+        courseEndEdit = findViewById(R.id.courseEndEdit);
+        courseInstructorNameEdit = findViewById(R.id.courseInstructorNameEdit);
+        courseInstructorPhoneEdit = findViewById(R.id.courseInstructorPhoneEdit);
+        courseInstructorEmailEdit = findViewById(R.id.courseInstructorEmailEdit);
+        statusSpinner = findViewById(R.id.courseStatusDropdown);
+        termSpinner = findViewById(R.id.courseTermDropdown);
+        courseSaveButton = findViewById(R.id.courseSaveButton);
+        courseCancelButton = findViewById(R.id.courseCancelButton);
+    }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_course_details, menu);

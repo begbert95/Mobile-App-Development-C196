@@ -25,9 +25,9 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             super(itemView);
             termItemView = itemView.findViewById(R.id.termTextView);
             itemView.setOnClickListener(view -> {
-                int position=getAdapterPosition();
+                int position = getAdapterPosition();
                 final Term current = mTerms.get(position);
-                //TODO figure out list properties
+
                 Intent intent = new Intent(context, TermDetails.class);
                 intent.putExtra("id", current.getId());
                 intent.putExtra("title", current.getTitle());
@@ -59,14 +59,12 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     @Override
     public void onBindViewHolder(@NonNull TermAdapter.TermViewHolder holder, int position) {
 
-        if(mTerms == null){
-            holder.termItemView.setText("<No terms created>");
+        if(mTerms == null || mTerms.isEmpty()){
+            holder.termItemView.setText(R.string.no_terms);
             return;
         }
 
-        Term term = mTerms.get(position);
-        String title = term.getTitle();
-        holder.termItemView.setText(title);
+        holder.termItemView.setText(mTerms.get(position).getTitle());
     }
 
     @Override
@@ -76,7 +74,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     @SuppressLint("NotifyDataSetChanged")
     public void setTerms(List<Term> terms){
-        mTerms=terms;
+        mTerms = terms;
         notifyDataSetChanged();
     }
 }

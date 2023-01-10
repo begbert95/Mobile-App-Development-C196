@@ -31,4 +31,13 @@
     <string name="channel_name">C196</string>
     <string name="channel_description">Scheduling App Channel</string>
     <string name="plus_sign">plus sign</string>
+    <string name="term_view">Term view</string>
+    <string name="no_courses"><![CDATA[<No courses created>]]></string>
+    <string name="no_terms"><![CDATA[<No terms created>]]></string>
+    <string name="assessment_title">Assessment Title</string>
+    <string name="english_test">English Test</string>
+    <string name="due_date">Due Date</string>
+    <string name="completed">Completed</string>
+    <string name="passed">Passed</string>
+    <string name="course">Course</string>
 </resources>

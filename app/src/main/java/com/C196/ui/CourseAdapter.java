@@ -65,7 +65,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
 
         if(mCourses == null){
-            holder.courseItemView.setText("<No courses created>");
+            holder.courseItemView.setText(R.string.no_courses);
             return;
         }
 

@@ -13,7 +13,7 @@ import com.C196.entities.Assessment;
 import com.C196.entities.Course;
 import com.C196.entities.Term;
 
-@Database(entities = {Course.class, Term.class, Assessment.class}, version = 1, exportSchema = false)
+@Database(entities = {Course.class, Term.class, Assessment.class}, version = 2, exportSchema = false)
 public abstract class DatabaseBuilder extends RoomDatabase {
     public abstract TermDAO termDAO();
     public abstract CourseDAO courseDAO();

@@ -11,7 +11,8 @@ public class Term {
     private String start;
     private String end;
 
-    public Term(String title, String start, String end) {
+    public Term(int id, String title, String start, String end) {
+        this.id = id;
         this.title = title;
         this.start = start;
         this.end = end;
