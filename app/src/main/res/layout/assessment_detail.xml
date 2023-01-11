@@ -148,7 +148,7 @@
                         android:layout_width="75pt"
                         android:layout_height="50dp" />
                     <Spinner
-                        android:id="@+id/courseTermDropdown"
+                        android:id="@+id/assessmentCourseDropdown"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:spinnerMode="dropdown"
@@ -164,7 +164,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/courseSaveButton"
+                        android:id="@+id/assessmentSaveButton"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <Button
-                        android:id="@+id/courseCancelButton"
+                        android:id="@+id/assessmentCancelButton"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

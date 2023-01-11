@@ -38,8 +38,7 @@ public class TermDetails extends AppCompatActivity {
     Button termSaveButton;
     Button termCancelButton;
 
-    final Calendar calendarStart = Calendar.getInstance();
-    final Calendar calendarEnd = Calendar.getInstance();
+
 
     int id;
     String title, start, end;
@@ -49,12 +48,15 @@ public class TermDetails extends AppCompatActivity {
     Repository repository = new Repository(getApplication());
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
-
+    Calendar calendarStart = Calendar.getInstance();
+    Calendar calendarEnd = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.term_details);
+
+
 
         setupViews();
 
@@ -119,14 +121,10 @@ public class TermDetails extends AppCompatActivity {
         termStartEdit.setOnClickListener(view -> {
             String info = termStartEdit.getText().toString();
 
-            if (!info.equals("")) {
-                try {
-                    calendarStart.setTime(sdf.parse(info));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                calendarStart.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+            try {
+                calendarStart.setTime(sdf.parse(info));
+            } catch (ParseException e) {
+                calendarStart.setTime(new Date());
             }
             new DatePickerDialog(TermDetails.this, termStartDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH),
                     calendarStart.get(Calendar.DAY_OF_MONTH)).show();
@@ -135,15 +133,12 @@ public class TermDetails extends AppCompatActivity {
         termEndEdit.setOnClickListener(view -> {
             String info = termEndEdit.getText().toString();
 
-            if (!info.equals("")) {
-                try {
-                    calendarEnd.setTime(sdf.parse(info));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                calendarEnd.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+            try {
+                calendarEnd.setTime(sdf.parse(info));
+            } catch (ParseException e) {
+                calendarEnd.setTime(new Date());
             }
+
             new DatePickerDialog(TermDetails.this, termEndDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH),
                     calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
         });
@@ -157,16 +152,16 @@ public class TermDetails extends AppCompatActivity {
                         termEndDate.toString()
                 );
                 repository.insert(term);
-                Toast.makeText(getParent(), "Term created", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Term created", Toast.LENGTH_LONG).show();
             } else {
                 term = new Term(
                         id,
                         termTitleEdit.getText().toString(),
-                        termStartDate.toString(),
-                        termEndDate.toString()
+                        termStartEdit.getText().toString(),
+                        termEndEdit.getText().toString()
                 );
                 repository.update(term);
-                Toast.makeText(getParent(), "Term updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Term updated", Toast.LENGTH_LONG).show();
             }
             try {
                 finish();
@@ -222,7 +217,7 @@ public class TermDetails extends AppCompatActivity {
         }
 
         else if(item.getItemId() == R.id.termNotifyStart) {
-            String startDateFromScreen = termStartDate.toString();
+            String startDateFromScreen = termStartEdit.toString();
 
             try {
                 date = sdf.parse(startDateFromScreen);

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.C196.R;
@@ -55,6 +56,8 @@ public class CourseDetails extends AppCompatActivity {
     Course course;
 
     Repository repository = new Repository(getApplication());
+
+    @NonNull
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
 
@@ -82,7 +85,7 @@ public class CourseDetails extends AppCompatActivity {
             );
         }
         catch (Exception e){
-            e.printStackTrace();
+            course = new Course();
         }
 
 
@@ -92,7 +95,10 @@ public class CourseDetails extends AppCompatActivity {
         courseInstructorNameEdit.setText(course.getInstructorName());
         courseInstructorEmailEdit.setText(course.getInstructorEmail());
         courseInstructorPhoneEdit.setText(course.getInstructorPhone());
-        //TODO figure out term id
+
+
+
+
         courseNotesEdit.setText(course.getNote());
 
         ArrayList<Term> termArrayList = new ArrayList<>(repository.getAllTerms());
@@ -155,36 +161,23 @@ public class CourseDetails extends AppCompatActivity {
 
     private void setupListeners(){
         courseStartEdit.setOnClickListener(view -> {
-            String info = courseStartEdit.getText().toString();
-            if(!info.equals("")){
-                try{
-                    calendarStart.setTime(sdf.parse(info));
-                }
-                catch (ParseException e){
-                    e.printStackTrace();
-                }
-            }
-            else
-                calendarStart.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
 
+            try {
+                calendarStart.setTime(sdf.parse(courseStartEdit.getText().toString()));
+            } catch (ParseException e) {
+                calendarStart.setTime(new Date());
+            }
 
             new DatePickerDialog(CourseDetails.this, courseStartDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH),
                     calendarStart.get(Calendar.DAY_OF_MONTH)).show();
         });
         courseEndEdit.setOnClickListener(view -> {
-            String info = courseEndEdit.getText().toString();
 
-            if(!info.equals("")){
-                try{
-                    calendarEnd.setTime(sdf.parse(info));
-                }
-                catch (ParseException e){
-                    e.printStackTrace();
-                }
+            try {
+                calendarEnd.setTime(sdf.parse(courseEndEdit.getText().toString()));
+            } catch (ParseException e) {
+                calendarEnd.setTime(new Date());
             }
-            else
-                calendarEnd.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
-
 
             new DatePickerDialog(CourseDetails.this, courseEndDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH),
                     calendarEnd.get(Calendar.DAY_OF_MONTH)).show();

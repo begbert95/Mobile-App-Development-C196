@@ -15,14 +15,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class CourseList extends AppCompatActivity {
 
     private Repository repository;
-    private final CourseAdapter courseAdapter = new CourseAdapter(this);
-    RecyclerView courseListRecycler = findViewById(R.id.courseListAssessmentRecycler);
+    private CourseAdapter courseAdapter;
+    RecyclerView courseListRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_list);
 
+        courseAdapter = new CourseAdapter(this);
+
+        courseListRecycler = findViewById(R.id.courseListAssessmentRecycler);
         courseListRecycler.setAdapter(courseAdapter);
         courseListRecycler.setLayoutManager(new LinearLayoutManager(this));
 
