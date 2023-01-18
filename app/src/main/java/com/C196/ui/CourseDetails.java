@@ -76,7 +76,7 @@ public class CourseDetails extends AppCompatActivity {
                     getIntent().getStringExtra("title"),
                     getIntent().getStringExtra("start"),
                     getIntent().getStringExtra("end"),
-                    Status.valueOf(getIntent().getStringExtra("status")),
+                    Status.valueOf(getIntent().getParcelableExtra("status")),
                     getIntent().getStringExtra("instructorName"),
                     getIntent().getStringExtra("instructorPhone"),
                     getIntent().getStringExtra("instructorEmail"),

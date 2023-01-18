@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Button termButton = findViewById(R.id.termButton);
         Button assessmentButton = findViewById(R.id.assessmentButton);
 
-        //createLorem();
+        createLorem();
 
         courseButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, CourseList.class)));
         termButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, TermList.class)));
@@ -38,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
         Repository repository = new Repository(getApplication());
 
-        repository.insert(new Assessment(0, "Assessment for Course 1", "2022-04-13 8:00", AssessmentType.OBJECTIVE, true, false, 1));
-        repository.insert(new Assessment(0, "Assessment for Course 2", "2022-04-13 8:00", AssessmentType.PERFORMANCE, true, false, 2));
-        repository.insert(new Assessment(0, "Assessment for Course 3", "2022-04-13 8:00", AssessmentType.OBJECTIVE, true, false, 3));
+        repository.insert(new Assessment(0, "Assessment for Course 1", "2022-04-13", AssessmentType.OBJECTIVE, true, false, 1));
+        repository.insert(new Assessment(0, "Assessment for Course 2", "2022-04-13", AssessmentType.PERFORMANCE, true, false, 2));
+        repository.insert(new Assessment(0, "Assessment for Course 3", "2022-04-13", AssessmentType.OBJECTIVE, true, false, 3));
 
-        repository.insert(new Term(0, "Term 1", "2022-01-13 8:00", "2022-04-13 8:00"));
-        repository.insert(new Term(0, "Term 2", "2022-01-13 8:00", "2022-04-13 8:00"));
-        repository.insert(new Term(0, "Term 3", "2022-01-13 8:00", "2022-04-13 8:00"));
+        repository.insert(new Term(0, "Term 1", "2022-01-13", "2022-04-13"));
+        repository.insert(new Term(0, "Term 2", "2022-01-13", "2022-04-13"));
+        repository.insert(new Term(0, "Term 3", "2022-01-13", "2022-04-13"));
 
-        repository.insert(new Course(0, "Course 1", "2022-01-13 8:00", "2022-04-13 8:00", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov", 1, "test"));
-        repository.insert(new Course(0, "Course 2", "2022-01-13 8:00", "2022-04-13 8:00", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov", 1, "test"));
-        repository.insert(new Course(0, "Course 3", "2022-01-13 8:00", "2022-04-13 8:00", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov", 1, "test"));
+        repository.insert(new Course(0, "Course 1", "2022-01-13", "2022-04-13", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov", 1, "test"));
+        repository.insert(new Course(0, "Course 2", "2022-01-13", "2022-04-13", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov", 1, "test"));
+        repository.insert(new Course(0, "Course 3", "2022-01-13", "2022-04-13", Status.InProgress, "Rusty Shackleford", "555-555-5555", "rshackleford@nsa.gov", 1, "test"));
     }
 }

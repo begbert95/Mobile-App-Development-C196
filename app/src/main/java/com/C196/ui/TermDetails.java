@@ -212,12 +212,13 @@ public class TermDetails extends AppCompatActivity {
             else {
                 repository.delete(term);
                 Toast.makeText(TermDetails.this, term.getTitle() + " was deleted", Toast.LENGTH_LONG).show();
+                this.finish();
             }
             return true;
         }
 
         else if(item.getItemId() == R.id.termNotifyStart) {
-            String startDateFromScreen = termStartEdit.toString();
+            String startDateFromScreen = termStartEdit.getText().toString();
 
             try {
                 date = sdf.parse(startDateFromScreen);
@@ -226,7 +227,7 @@ public class TermDetails extends AppCompatActivity {
             }
 
             intent = new Intent(TermDetails.this, Receiver.class);
-            intent.putExtra("key", startDateFromScreen + " should trigger");
+            intent.putExtra("key", termTitleEdit.getText().toString() + "starts today");
 
             sender = PendingIntent.getBroadcast(TermDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
@@ -235,7 +236,7 @@ public class TermDetails extends AppCompatActivity {
 
         else if(item.getItemId() == R.id.termNotifyEnd) {
 
-            String endDateFromScreen = termEndDate.toString();
+            String endDateFromScreen = termEndEdit.getText().toString();
 
             try {
                 date = sdf.parse(endDateFromScreen);
@@ -243,7 +244,7 @@ public class TermDetails extends AppCompatActivity {
                 e.printStackTrace();
             }
             intent = new Intent(TermDetails.this, Receiver.class);
-            intent.putExtra("key", endDateFromScreen + " should trigger");
+            intent.putExtra("key", termTitleEdit.getText().toString() + "ends today");
 
             sender = PendingIntent.getBroadcast(TermDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
 
