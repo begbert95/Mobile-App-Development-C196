@@ -40,4 +40,10 @@
     <string name="completed">Completed</string>
     <string name="passed">Passed</string>
     <string name="course">Course</string>
+    <string name="term">Term</string>
+    <string name="no_assessments"><![CDATA[<No assessments created>]]></string>
+    <string name="notify_due_date">Notify due date</string>
+    <string name="share">Share</string>
+    <string name="no_course_title">No course title!</string>
+    <string name="no_course_end">No course end date!</string>
 </resources>

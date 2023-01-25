@@ -20,7 +20,7 @@
         <activity
             android:name=".ui.TermDetails"
             android:exported="false"
-            android:label="New Term"
+            android:label="Term Details"
             android:parentActivityName=".ui.TermList">
             <meta-data
                 android:name="android.app.lib_name"
@@ -29,7 +29,7 @@
         <activity
             android:name=".ui.AssessmentDetails"
             android:exported="false"
-            android:label="New Assessment"
+            android:label="Assessment Details"
             android:parentActivityName=".ui.AssessmentList">
             <meta-data
                 android:name="android.app.lib_name"
@@ -38,7 +38,7 @@
         <activity
             android:name=".ui.CourseDetails"
             android:exported="false"
-            android:label="New Course"
+            android:label="Course Details"
             android:parentActivityName=".ui.CourseList">
             <meta-data
                 android:name="android.app.lib_name"

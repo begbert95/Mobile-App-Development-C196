@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Button termButton = findViewById(R.id.termButton);
         Button assessmentButton = findViewById(R.id.assessmentButton);
 
-        createLorem();
+        //createLorem();
 
         courseButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, CourseList.class)));
         termButton.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, TermList.class)));

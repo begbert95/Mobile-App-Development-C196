@@ -148,18 +148,29 @@ public class TermDetails extends AppCompatActivity {
                 term = new Term(
                         0,
                         termTitleEdit.getText().toString(),
-                        termStartDate.toString(),
-                        termEndDate.toString()
+                        termStartEdit.getText().toString(),
+                        termEndEdit.getText().toString()
                 );
                 repository.insert(term);
                 Toast.makeText(this, "Term created", Toast.LENGTH_LONG).show();
             } else {
-                term = new Term(
-                        id,
-                        termTitleEdit.getText().toString(),
-                        termStartEdit.getText().toString(),
-                        termEndEdit.getText().toString()
-                );
+                try{
+                    term = new Term(
+                            id,
+                            termTitleEdit.getText().toString(),
+                            sdf.parse(termStartEdit.getText().toString()).toString(),
+                            sdf.parse(termEndEdit.getText().toString()).toString()
+                    );
+                }
+                catch (ParseException e){
+                    term = new Term(
+                            id,
+                            termTitleEdit.getText().toString(),
+                            termStartEdit.getText().toString(),
+                            termEndEdit.getText().toString()
+                    );
+                }
+
                 repository.update(term);
                 Toast.makeText(this, "Term updated", Toast.LENGTH_LONG).show();
             }

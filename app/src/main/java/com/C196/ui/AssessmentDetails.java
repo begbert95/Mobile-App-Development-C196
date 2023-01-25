@@ -1,7 +1,14 @@
 package com.C196.ui;
 
+import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +23,7 @@ import com.C196.database.Repository;
 import com.C196.entities.Assessment;
 import com.C196.entities.AssessmentType;
 import com.C196.entities.Course;
+import com.C196.entities.Term;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,9 +50,6 @@ public class AssessmentDetails extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener assessmentEndDate;
     final Calendar calendarEnd = Calendar.getInstance();
 
-    /*int id;
-    String title, start, end;*/
-
     Assessment assessment;
 
     Repository repository = new Repository(getApplication());
@@ -54,17 +59,17 @@ public class AssessmentDetails extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assessment);
+        setContentView(R.layout.assessment_detail);
 
         setupViews();
 
 
         try {
             assessment = new Assessment(
-                    getIntent().getIntExtra("id", -1),
+                    0,
                     getIntent().getStringExtra("title"),
                     getIntent().getStringExtra("end"),
-                    AssessmentType.valueOf(getIntent().getStringExtra("type")),
+                    (AssessmentType) (getIntent().getSerializableExtra("type")),
                     getIntent().getBooleanExtra("completed", false),
                     getIntent().getBooleanExtra("passed", false),
                     getIntent().getIntExtra("courseID", 0)
@@ -73,26 +78,6 @@ public class AssessmentDetails extends AppCompatActivity {
             assessment = new Assessment();
         }
 
-
-        if (assessment.getId() > 0) {
-            populateAssessmentData();
-        }
-
-        setupListeners();
-
-
-        assessmentEndDate = (view, year, monthOfYear, dayOfMonth) -> {
-
-            calendarEnd.set(Calendar.YEAR, year);
-            calendarEnd.set(Calendar.MONTH, monthOfYear);
-            calendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-            assessmentEndEdit.setText(sdf.format(calendarEnd.getTime()));
-        };
-    }
-
-
-    private void populateAssessmentData() {
         assessmentTitleEdit.setText(assessment.getTitle());
         assessmentEndEdit.setText(assessment.getEndDate());
         completedCheck.setChecked(assessment.isCompleted());
@@ -115,6 +100,19 @@ public class AssessmentDetails extends AppCompatActivity {
 
         assessmentCourseDropdown.setAdapter(courseArrayAdapter);
         assessmentCourseDropdown.setSelection(courseArrayAdapter.getPosition(assessment.getTitle()));
+
+
+        setupListeners();
+
+
+        assessmentEndDate = (view, year, monthOfYear, dayOfMonth) -> {
+
+            calendarEnd.set(Calendar.YEAR, year);
+            calendarEnd.set(Calendar.MONTH, monthOfYear);
+            calendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            assessmentEndEdit.setText(sdf.format(calendarEnd.getTime()));
+        };
     }
 
 
@@ -151,13 +149,15 @@ public class AssessmentDetails extends AppCompatActivity {
 
                     if(assessment.getId() < 1){
                         repository.insert(assessment);
-                        Toast.makeText(getParent(), "Assessment created", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Assessment created", Toast.LENGTH_LONG).show();
+
                     }
 
                     else{
                         repository.update(assessment);
-                        Toast.makeText(getParent(), "Assessment updated", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Assessment updated", Toast.LENGTH_LONG).show();
                     }
+                    finish();
                 }
 
         );
@@ -177,5 +177,50 @@ public class AssessmentDetails extends AppCompatActivity {
         passedCheck = findViewById(R.id.passedCheck);
         assessmentSaveButton = findViewById(R.id.assessmentSaveButton);
         assessmentCancelButton = findViewById(R.id.assessmentCancelButton);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        Date date = null;
+        Intent intent;
+        PendingIntent sender;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        if (item.getItemId() == R.id.assessmentDelete) {
+
+          try{
+              repository.delete(assessment);
+              this.finish();
+              return true;
+          }catch(Exception e){
+              return false;
+          }
+        }
+
+        else if(item.getItemId() == R.id.assessmentNotifyEnd) {
+
+            String endDateFromScreen = assessmentEndEdit.getText().toString();
+
+            try {
+                date = sdf.parse(endDateFromScreen);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            intent = new Intent(AssessmentDetails.this, Receiver.class);
+            intent.putExtra("key", assessmentTitleEdit.getText().toString() + "is due today");
+
+            sender = PendingIntent.getBroadcast(AssessmentDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
+            return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_assessment_details, menu);
+        return true;
     }
 }

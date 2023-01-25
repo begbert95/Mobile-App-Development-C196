@@ -23,7 +23,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
         private TermViewHolder(View itemView){
             super(itemView);
-            termItemView = itemView.findViewById(R.id.termTextView);
+            termItemView = itemView.findViewById(R.id.termCourseTitleView);
             itemView.setOnClickListener(view -> {
                 int position = getAdapterPosition();
                 final Term current = mTerms.get(position);

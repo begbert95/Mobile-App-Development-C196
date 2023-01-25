@@ -20,15 +20,18 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     class CourseViewHolder extends RecyclerView.ViewHolder{
         private final TextView courseItemView;
+        private final TextView courseEndTextView;
 
         private CourseViewHolder(View itemView){
             super(itemView);
-            courseItemView = itemView.findViewById(R.id.courseNameTextView);
+            courseItemView = itemView.findViewById(R.id.courseAssessmentTitleView);
+            courseEndTextView = itemView.findViewById(R.id.courseAssessmentEndView);
+
             itemView.setOnClickListener(view -> {
                 int position=getAdapterPosition();
                 final Course current = mCourses.get(position);
                 Intent intent = new Intent(context, CourseDetails.class);
-                //TODO figure out list properties
+
                 intent.putExtra("title", current.getTitle());
                 intent.putExtra("start", current.getStart());
                 intent.putExtra("end", current.getEnd());
@@ -55,7 +58,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     @NonNull
     @Override
-    public CourseAdapter.CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CourseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate((R.layout.course_list_item), parent, false);
 
         return new CourseViewHolder(itemView);
@@ -64,14 +67,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     @Override
     public void onBindViewHolder(@NonNull CourseViewHolder holder, int position) {
 
-        if(mCourses == null){
-            holder.courseItemView.setText(R.string.no_courses);
-            return;
+        if(mCourses != null){
+            Course course = mCourses.get(position);
+            holder.courseItemView.setText(course.getTitle());
+            holder.courseEndTextView.setText(course.getEnd());
         }
-
-        Course course = mCourses.get(position);
-        String title = course.getTitle();
-        holder.courseItemView.setText(title);
+        else{
+            holder.courseItemView.setText(R.string.no_course_title);
+            holder.courseEndTextView.setText(R.string.no_course_end);
+        }
     }
 
     @Override
@@ -81,7 +85,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     @SuppressLint("NotifyDataSetChanged")
     public void setmCourses(List<Course> courses){
-        mCourses=courses;
+        mCourses = courses;
         notifyDataSetChanged();
     }
 }

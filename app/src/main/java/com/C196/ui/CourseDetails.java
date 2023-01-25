@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.C196.R;
 import com.C196.database.Repository;
+import com.C196.entities.Assessment;
 import com.C196.entities.Course;
 import com.C196.entities.Status;
 import com.C196.entities.Term;
@@ -29,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class CourseDetails extends AppCompatActivity {
@@ -76,7 +80,7 @@ public class CourseDetails extends AppCompatActivity {
                     getIntent().getStringExtra("title"),
                     getIntent().getStringExtra("start"),
                     getIntent().getStringExtra("end"),
-                    Status.valueOf(getIntent().getParcelableExtra("status")),
+                    (Status) getIntent().getSerializableExtra("status"),
                     getIntent().getStringExtra("instructorName"),
                     getIntent().getStringExtra("instructorPhone"),
                     getIntent().getStringExtra("instructorEmail"),
@@ -89,17 +93,29 @@ public class CourseDetails extends AppCompatActivity {
         }
 
 
+        courseTitleEdit.setText(course.getTitle());
         courseStartEdit.setText(course.getStart());
         courseEndEdit.setText(course.getEnd());
-        courseTitleEdit.setText(course.getTitle());
         courseInstructorNameEdit.setText(course.getInstructorName());
         courseInstructorEmailEdit.setText(course.getInstructorEmail());
         courseInstructorPhoneEdit.setText(course.getInstructorPhone());
-
-
-
-
         courseNotesEdit.setText(course.getNote());
+
+
+        RecyclerView assessmentRecyclerView = findViewById(R.id.courseDetailAssessmentRecycler);
+        final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this);
+        assessmentRecyclerView.setAdapter(assessmentAdapter);
+        assessmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        List<Assessment> filteredAssessments = new ArrayList<>();
+
+        for(Assessment a : repository.getAllAssessments())
+            if(a.getCourseID() == course.getId())
+                filteredAssessments.add(a);
+
+        assessmentAdapter.setmAssessments(filteredAssessments);
+
 
         ArrayList<Term> termArrayList = new ArrayList<>(repository.getAllTerms());
         ArrayList<String> stringArrayList = new ArrayList<>();
@@ -196,12 +212,12 @@ public class CourseDetails extends AppCompatActivity {
             if(course.getId() == -1){
                 course.setId(0);
                 repository.insert(course);
-                Toast.makeText(getParent(), "Course created", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Course created", Toast.LENGTH_LONG).show();
 
             }
             else{
                 repository.update(course);
-                Toast.makeText(getParent(), "Course updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Course updated", Toast.LENGTH_LONG).show();
 
             }
 
@@ -225,6 +241,7 @@ public class CourseDetails extends AppCompatActivity {
         termSpinner = findViewById(R.id.courseTermDropdown);
         courseSaveButton = findViewById(R.id.courseSaveButton);
         courseCancelButton = findViewById(R.id.courseCancelButton);
+
     }
 
 
@@ -247,6 +264,7 @@ public class CourseDetails extends AppCompatActivity {
             case R.id.courseDelete:
                 repository.delete(course);
                 Toast.makeText(CourseDetails.this, course.getTitle() + " was deleted", Toast.LENGTH_LONG).show();
+                this.finish();
                 return true;
 
             case R.id.courseShareMenu:

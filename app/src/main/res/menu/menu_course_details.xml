@@ -5,7 +5,7 @@
         android:title="@string/delete_course" />
     <item
         android:id="@+id/courseShareMenu"
-        android:title="@string/menu"
+        android:title="@string/share"
         />
     <item
         android:id="@+id/courseNotifyStart"
