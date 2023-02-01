@@ -47,4 +47,6 @@
     <string name="no_course_title">No course title!</string>
     <string name="no_course_end">No course end date!</string>
     <string name="delete_assessment">Delete assessment</string>
+    <string name="course_tracker">Course Tracker</string>
+    <string name="by_brandon_egbert">by Brandon Egbert</string>
 </resources>

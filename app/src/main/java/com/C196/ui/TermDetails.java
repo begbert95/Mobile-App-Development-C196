@@ -23,11 +23,13 @@ import com.C196.entities.Term;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class TermDetails extends AppCompatActivity {
 
@@ -123,9 +125,9 @@ public class TermDetails extends AppCompatActivity {
             String info = termStartEdit.getText().toString();
 
             try {
-                calendarStart.setTime(sdf.parse(info));
+                calendarStart.setTime(Objects.requireNonNull(sdf.parse(info)));
             } catch (ParseException e) {
-                calendarStart.setTime(new Date());
+                e.printStackTrace();
             }
             new DatePickerDialog(TermDetails.this, termStartDate, calendarStart.get(Calendar.YEAR), calendarStart.get(Calendar.MONTH),
                     calendarStart.get(Calendar.DAY_OF_MONTH)).show();
@@ -134,51 +136,57 @@ public class TermDetails extends AppCompatActivity {
         termEndEdit.setOnClickListener(view -> {
             String info = termEndEdit.getText().toString();
 
+
             try {
-                calendarEnd.setTime(sdf.parse(info));
+                calendarEnd.setTime(Objects.requireNonNull(sdf.parse(info)));
             } catch (ParseException e) {
-                calendarEnd.setTime(new Date());
+                e.printStackTrace();
             }
+
 
             new DatePickerDialog(TermDetails.this, termEndDate, calendarEnd.get(Calendar.YEAR), calendarEnd.get(Calendar.MONTH),
                     calendarEnd.get(Calendar.DAY_OF_MONTH)).show();
         });
 
         termSaveButton.setOnClickListener(view -> {
-            if (id == -1) {
-                term = new Term(
-                        0,
-                        termTitleEdit.getText().toString(),
-                        termStartEdit.getText().toString(),
-                        termEndEdit.getText().toString()
-                );
-                repository.insert(term);
-                Toast.makeText(this, "Term created", Toast.LENGTH_LONG).show();
-            } else {
-                try{
+            if(termTitleEdit.getText().toString().equals("") || termStartEdit.getText().toString().equals(""))
+                Toast.makeText(this, "Please select a start and end date", Toast.LENGTH_LONG).show();
+            else{
+                if (id == -1) {
                     term = new Term(
-                            id,
-                            termTitleEdit.getText().toString(),
-                            sdf.parse(termStartEdit.getText().toString()).toString(),
-                            sdf.parse(termEndEdit.getText().toString()).toString()
-                    );
-                }
-                catch (ParseException e){
-                    term = new Term(
-                            id,
+                            0,
                             termTitleEdit.getText().toString(),
                             termStartEdit.getText().toString(),
                             termEndEdit.getText().toString()
                     );
-                }
+                    repository.insert(term);
+                    Toast.makeText(this, "Term created", Toast.LENGTH_LONG).show();
+                } else {
+                    try{
+                        term = new Term(
+                                id,
+                                termTitleEdit.getText().toString(),
+                                sdf.parse(termStartEdit.getText().toString()).toString(),
+                                sdf.parse(termEndEdit.getText().toString()).toString()
+                        );
+                    }
+                    catch (ParseException e){
+                        term = new Term(
+                                id,
+                                termTitleEdit.getText().toString(),
+                                termStartEdit.getText().toString(),
+                                termEndEdit.getText().toString()
+                        );
+                    }
 
-                repository.update(term);
-                Toast.makeText(this, "Term updated", Toast.LENGTH_LONG).show();
-            }
-            try {
-                finish();
-            } catch (Throwable e) {
-                e.printStackTrace();
+                    repository.update(term);
+                    Toast.makeText(this, "Term updated", Toast.LENGTH_LONG).show();
+                }
+                try {
+                    finish();
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -277,7 +285,7 @@ public class TermDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         List<Course> filteredCourses = new ArrayList<>();
         for (Course c : repository.getAllCourses()) {
-            if (c.getId() == id)
+            if (c.getTermID() == id)
                 filteredCourses.add(c);
         }
         courseAdapter.setmCourses(filteredCourses);

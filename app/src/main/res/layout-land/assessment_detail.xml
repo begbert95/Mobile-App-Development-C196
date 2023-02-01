@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ScrollView
-        android:id="@+id/courseDetailScrollView"
+        android:id="@+id/assessmentDetailScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="ScrollViewCount">
@@ -31,43 +30,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/course_title" />
+                        android:text="@string/assessment_title" />
 
                     <Space
                         android:layout_width="75pt"
                         android:layout_height="match_parent" />
 
                     <EditText
-                        android:id="@+id/courseTitleEdit"
+                        android:id="@+id/assessmentTitleEdit"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
                         android:autofillHints="title"
-                        android:hint="@string/english"
+                        android:hint="@string/english_test"
                         android:inputType="text" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/course_start" />
-                    <Space
-                        android:layout_width="75pt"
-                        android:layout_height="match_parent" />
-                    <EditText
-                        android:id="@+id/courseStartEdit"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:autofillHints="start date"
-                        android:inputType="none"/>
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -77,13 +55,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/course_end"
+                        android:text="@string/due_date"
                         android:textAlignment="center" />
                     <Space
                         android:layout_width="75pt"
                         android:layout_height="match_parent" />
                     <EditText
-                        android:id="@+id/courseEndEdit"
+                        android:id="@+id/assessmentEndEdit"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
@@ -104,7 +82,7 @@
                         android:layout_width="75pt"
                         android:layout_height="50dp" />
                     <Spinner
-                        android:id="@+id/courseStatusDropdown"
+                        android:id="@+id/assessmentTypeDropdown"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:spinnerMode="dropdown"
@@ -121,18 +99,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/instructor_name" />
+                        android:text="@string/completed" />
+
                     <Space
-                        android:layout_width="75pt"
+                        android:layout_width="125pt"
                         android:layout_height="match_parent" />
-                    <EditText
-                        android:id="@+id/courseInstructorNameEdit"
+
+                    <CheckBox
+                        android:id="@+id/completedCheck"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:autofillHints="instructor name"
-                        android:hint="@string/rusty_shackleford"
-                        android:layout_weight="1"
-                        android:inputType="text" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
                 </LinearLayout>
 
 
@@ -145,18 +122,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/instructor_phone" />
+                        android:text="@string/passed" />
                     <Space
-                        android:layout_width="75pt"
+                        android:layout_width="125pt"
                         android:layout_height="match_parent" />
-                    <EditText
-                        android:id="@+id/courseInstructorPhoneEdit"
+
+                    <CheckBox
+                        android:id="@+id/passedCheck"
                         android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:autofillHints="instructor phone"
-                        android:hint="@string/_555_555_5555"
-                        android:layout_weight="1"
-                        android:inputType="phone" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
                 </LinearLayout>
 
 
@@ -168,35 +143,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/instructor_email" />
-                    <Space
-                        android:layout_width="75pt"
-                        android:layout_height="match_parent" />
-                    <EditText
-                        android:id="@+id/courseInstructorEmailEdit"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:autofillHints="instructor phone"
-                        android:hint="@string/_555_555_5555"
-                        android:inputType="textEmailAddress" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/term"/>
+                        android:text="@string/course" />
                     <Space
                         android:layout_width="75pt"
                         android:layout_height="50dp" />
                     <Spinner
-                        android:id="@+id/courseTermDropdown"
+                        android:id="@+id/assessmentCourseDropdown"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:spinnerMode="dropdown"
@@ -206,54 +158,13 @@
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/notes" />
-                    <Space
-                        android:layout_width="75pt"
-                        android:layout_height="match_parent" />
-                    <EditText
-                        android:id="@+id/courseNotesEdit"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:autofillHints="instructor phone"
-                        android:hint="@string/this_course_is_hard"
-                        android:inputType="text" />
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/assessments" />
-                    <Space
-                        android:layout_width="15pt"
-                        android:layout_height="match_parent" />
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/assessmentRecycler"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/courseSaveButton"
+                        android:id="@+id/assessmentSaveButton"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -264,7 +175,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <Button
-                        android:id="@+id/courseCancelButton"
+                        android:id="@+id/assessmentCancelButton"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -273,10 +184,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-
-
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -58,7 +58,7 @@ public class CourseDetails extends AppCompatActivity {
 
 
     Course course;
-
+    Term term;
     Repository repository = new Repository(getApplication());
 
     @NonNull
@@ -117,41 +117,26 @@ public class CourseDetails extends AppCompatActivity {
         assessmentAdapter.setmAssessments(filteredAssessments);
 
 
-        ArrayList<Term> termArrayList = new ArrayList<>(repository.getAllTerms());
         ArrayList<String> stringArrayList = new ArrayList<>();
-        Term tempTerm = null;
-        for(Term t : termArrayList) {
+
+        for(Term t : repository.getAllTerms()) {
             stringArrayList.add(t.getTitle());
             if(t.getId() == course.getTermID())
-                tempTerm = t;
+                term = t;
         }
 
 
         ArrayAdapter<String> termArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, stringArrayList);
         termSpinner.setAdapter(termArrayAdapter);
-        if(tempTerm != null)
-            termSpinner.setSelection(termArrayAdapter.getPosition(tempTerm.getTitle()));
+        if(term != null)
+            termSpinner.setSelection(termArrayAdapter.getPosition(term.getTitle()));
 
 
 
-        ArrayAdapter<Status> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
-        statusSpinner.setAdapter(arrayAdapter);
-        statusSpinner.setSelection(arrayAdapter.getPosition(course.getStatus()));
+        ArrayAdapter<Status> statusArrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, Status.values());
+        statusSpinner.setAdapter(statusArrayAdapter);
+        statusSpinner.setSelection(statusArrayAdapter.getPosition(course.getStatus()));
 
-
-        /* TODO Delete or use
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                dropdown.set.setText(arrayAdapter.getItem(i).toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                courseNotesEdit.setText("nothing selected");
-            }
-        });
-        */
 
         setupListeners();
 
@@ -209,10 +194,15 @@ public class CourseDetails extends AppCompatActivity {
             course.setStatus(Status.valueOf(statusSpinner.getSelectedItem().toString()));
             course.setNote(courseNotesEdit.getText().toString());
 
+            Term tempTerm = repository.getAllTerms().get(termSpinner.getSelectedItemPosition());
+
+            course.setTermID(tempTerm.getId());
+
+
             if(course.getId() == -1){
-                //course.setId(0);
+                course.setId(0);
                 repository.insert(course);
-                Toast.makeText(this, "Course created " + course.getId(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Course created", Toast.LENGTH_LONG).show();
 
             }
             else{
