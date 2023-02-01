@@ -84,7 +84,7 @@ public class CourseDetails extends AppCompatActivity {
                     getIntent().getStringExtra("instructorName"),
                     getIntent().getStringExtra("instructorPhone"),
                     getIntent().getStringExtra("instructorEmail"),
-                    getIntent().getIntExtra("termID", -1),
+                    getIntent().getIntExtra("termID", 0),
                     getIntent().getStringExtra("note")
             );
         }
@@ -102,7 +102,7 @@ public class CourseDetails extends AppCompatActivity {
         courseNotesEdit.setText(course.getNote());
 
 
-        RecyclerView assessmentRecyclerView = findViewById(R.id.courseDetailAssessmentRecycler);
+        RecyclerView assessmentRecyclerView = findViewById(R.id.assessmentRecycler);
         final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this);
         assessmentRecyclerView.setAdapter(assessmentAdapter);
         assessmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -210,9 +210,9 @@ public class CourseDetails extends AppCompatActivity {
             course.setNote(courseNotesEdit.getText().toString());
 
             if(course.getId() == -1){
-                course.setId(0);
+                //course.setId(0);
                 repository.insert(course);
-                Toast.makeText(this, "Course created", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Course created " + course.getId(), Toast.LENGTH_LONG).show();
 
             }
             else{
@@ -249,6 +249,21 @@ public class CourseDetails extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_course_details, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+        RecyclerView recyclerView = findViewById(R.id.assessmentRecycler);
+        final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this);
+        recyclerView.setAdapter(assessmentAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Assessment> filteredAssessments = new ArrayList<>();
+        for (Assessment a : repository.getAllAssessments()) {
+            if (a.getCourseID() == course.getId()) filteredAssessments.add(a);
+        }
+        assessmentAdapter.setmAssessments(filteredAssessments);
     }
 
     @SuppressLint("NonConstantResourceId")

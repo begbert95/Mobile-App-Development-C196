@@ -112,7 +112,7 @@
                         android:layout_marginEnd="25dp"
                         android:text="@string/courses" />
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/termDetailCourseRecycler"
+                        android:id="@+id/courseRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>

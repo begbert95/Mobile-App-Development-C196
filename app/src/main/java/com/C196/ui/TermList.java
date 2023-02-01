@@ -20,7 +20,7 @@ public class TermList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.term_list);
 
-        RecyclerView termListRecycler = findViewById(R.id.termListCourseRecycler);
+        RecyclerView termListRecycler = findViewById(R.id.termListRecycler);
         final TermAdapter termAdapter = new TermAdapter(this);
         termListRecycler.setAdapter(termAdapter);
         termListRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -39,7 +39,7 @@ public class TermList extends AppCompatActivity {
 
         super.onResume();
 
-        RecyclerView termListRecycler = findViewById(R.id.termListCourseRecycler);
+        RecyclerView termListRecycler = findViewById(R.id.termListRecycler);
         final TermAdapter termAdapter = new TermAdapter(this);
         termListRecycler.setAdapter(termAdapter);
         termListRecycler.setLayoutManager(new LinearLayoutManager(this));

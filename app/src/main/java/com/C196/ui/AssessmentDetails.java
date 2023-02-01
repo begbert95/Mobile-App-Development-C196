@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.C196.R;
 import com.C196.database.Repository;
@@ -30,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AssessmentDetails extends AppCompatActivity {
@@ -66,7 +69,7 @@ public class AssessmentDetails extends AppCompatActivity {
 
         try {
             assessment = new Assessment(
-                    0,
+                    getIntent().getIntExtra("id", -1),
                     getIntent().getStringExtra("title"),
                     getIntent().getStringExtra("end"),
                     (AssessmentType) (getIntent().getSerializableExtra("type")),
@@ -138,19 +141,22 @@ public class AssessmentDetails extends AppCompatActivity {
                     assessment.setCompleted(completedCheck.isChecked());
                     assessment.setPassed(passedCheck.isChecked());
 
+                    try {
+                        String courseName = assessmentCourseDropdown.getSelectedItem().toString();
 
-                    String courseName = assessmentCourseDropdown.getSelectedItem().toString();
-
-                    for (Course c : repository.getAllCourses()) {
-                        if (c.getTitle().equals(courseName))
-                            assessment.setCourseID(c.getId());
+                        for (Course c : repository.getAllCourses()) {
+                            if (c.getTitle().equals(courseName))
+                                assessment.setCourseID(c.getId());
+                        }
+                    }
+                    catch(NullPointerException e){
+                        assessment.setCourseID(0);
                     }
 
 
-                    if(assessment.getId() < 1){
+                    if(assessment.getId() == -1){
                         repository.insert(assessment);
                         Toast.makeText(this, "Assessment created", Toast.LENGTH_LONG).show();
-
                     }
 
                     else{
@@ -187,14 +193,16 @@ public class AssessmentDetails extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         if (item.getItemId() == R.id.assessmentDelete) {
-
-          try{
-              repository.delete(assessment);
-              this.finish();
-              return true;
-          }catch(Exception e){
-              return false;
-          }
+            try{
+                repository.delete(assessment);
+                Toast.makeText(AssessmentDetails.this, assessment.getTitle() + " was deleted", Toast.LENGTH_LONG).show();
+                this.finish();
+                return true;
+            }
+            catch(Exception e){
+                Toast.makeText(AssessmentDetails.this, "ERROR: Unable to delete " + assessment.getTitle(), Toast.LENGTH_LONG).show();
+                return false;
+            }
         }
 
         else if(item.getItemId() == R.id.assessmentNotifyEnd) {
@@ -223,4 +231,5 @@ public class AssessmentDetails extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_assessment_details, menu);
         return true;
     }
+
 }

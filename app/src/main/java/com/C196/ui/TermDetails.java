@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class TermDetails extends AppCompatActivity {
@@ -102,7 +103,7 @@ public class TermDetails extends AppCompatActivity {
         termSaveButton = findViewById(R.id.termSaveButton);
         termCancelButton = findViewById(R.id.termCancelButton);
 
-        RecyclerView recyclerView = findViewById(R.id.termDetailCourseRecycler);
+        RecyclerView recyclerView = findViewById(R.id.courseRecycler);
         final CourseAdapter courseAdapter = new CourseAdapter(this);
         recyclerView.setAdapter(courseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -265,5 +266,20 @@ public class TermDetails extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        RecyclerView recyclerView = findViewById(R.id.courseRecycler);
+        final CourseAdapter courseAdapter = new CourseAdapter(this);
+        recyclerView.setAdapter(courseAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        List<Course> filteredCourses = new ArrayList<>();
+        for (Course c : repository.getAllCourses()) {
+            if (c.getId() == id)
+                filteredCourses.add(c);
+        }
+        courseAdapter.setmCourses(filteredCourses);
     }
 }

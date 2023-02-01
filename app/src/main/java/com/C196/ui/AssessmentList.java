@@ -39,9 +39,11 @@ public class AssessmentList extends AppCompatActivity {
         super.onResume();
 
         RecyclerView assessmentListRecycler = findViewById(R.id.assessmentListRecycler);
+
         final AssessmentAdapter assessmentAdapter = new AssessmentAdapter(this);
         assessmentListRecycler.setAdapter(assessmentAdapter);
         assessmentListRecycler.setLayoutManager(new LinearLayoutManager(this));
+
         assessmentAdapter.setmAssessments(repository.getAllAssessments());
     }
 }

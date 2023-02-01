@@ -32,6 +32,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 final Course current = mCourses.get(position);
                 Intent intent = new Intent(context, CourseDetails.class);
 
+                intent.putExtra("id", current.getId());
                 intent.putExtra("title", current.getTitle());
                 intent.putExtra("start", current.getStart());
                 intent.putExtra("end", current.getEnd());
