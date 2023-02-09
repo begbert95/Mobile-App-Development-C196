@@ -155,6 +155,7 @@ public class AssessmentDetails extends AppCompatActivity {
 
 
                     if(assessment.getId() == -1){
+                        assessment.setId(0);
                         repository.insert(assessment);
                         Toast.makeText(this, "Assessment created", Toast.LENGTH_LONG).show();
                     }

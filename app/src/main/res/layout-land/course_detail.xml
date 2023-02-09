@@ -178,7 +178,7 @@
                         android:layout_height="50dp"
                         android:layout_weight="1"
                         android:autofillHints="instructor phone"
-                        android:hint="@string/_555_555_5555"
+                        android:hint="rshackleford@wgu.edu"
                         android:inputType="textEmailAddress" />
                 </LinearLayout>
 

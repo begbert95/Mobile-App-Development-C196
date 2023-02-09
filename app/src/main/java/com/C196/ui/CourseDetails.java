@@ -283,7 +283,7 @@ public class CourseDetails extends AppCompatActivity {
                 return true;
             case R.id.courseNotifyStart:
 
-                String startDateFromScreen = courseStartDate.toString();
+                String startDateFromScreen = courseStartEdit.getText().toString();
 
                 try {
                     date = sdf.parse(startDateFromScreen);
@@ -298,20 +298,21 @@ public class CourseDetails extends AppCompatActivity {
                 alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
                 return true;
             case R.id.courseNotifyEnd:
-                String endDateFromScreen = courseEndDate.toString();
+                String endDateFromScreen = courseEndEdit.getText().toString();
 
                 try {
                     date = sdf.parse(endDateFromScreen);
+                    intent = new Intent(CourseDetails.this, Receiver.class);
+                    intent.putExtra("key", endDateFromScreen + " should trigger");
+
+                    sender = PendingIntent.getBroadcast(CourseDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
+                    return true;
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                intent = new Intent(CourseDetails.this, Receiver.class);
-                intent.putExtra("key", endDateFromScreen + " should trigger");
 
-                sender = PendingIntent.getBroadcast(CourseDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
-
-                alarmManager.set(AlarmManager.RTC_WAKEUP, date.getTime(), sender);
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }
